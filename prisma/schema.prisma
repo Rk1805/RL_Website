@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Laminate {
+  id          String   @id @default(cuid())
+  name        String
+  image       String
+  finish      String
+  color       String
+  stock       Int
+  price       Float
+  createdAt   DateTime @default(now())
+}

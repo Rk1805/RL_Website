@@ -1,0 +1,9 @@
+allowBuilds:
+  '@ampproject/toolbox-optimizer': true
+  '@prisma/engines': true
+  canvas: true
+  core-js: true
+  es5-ext: true
+  fsevents: true
+  prisma: true
+  unrs-resolver: true
