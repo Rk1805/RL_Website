@@ -1,0 +1,26 @@
+Brushed Oak - BO
+Wood Blocks - WB
+Italian Leather - IL
+King Crowns - KC
+Rosemary - RM
+Stitch Leather - SL
+Venner Line - VL
+Saw Cut - SC
+Horizontal Gloss Line - HGL
+Stone Gloss Strip - SGS
+Magical Dots - MD
+Rough Veneer - RV
+Diamond Cut - DC
+Log Ash - LA
+Hard Rock - HR
+Ash Wood - AW
+Absolute Matt - AM
+High Gloss - HG
+Suede Finish - SF
+Charred Wood - CW
+Noom Bark - NB
+Natural Veener - NV
+Retro Diamond - RD
+Malunai Wood - MW
+Rowan Leaves - RL
+Horizontal SF - HZSF

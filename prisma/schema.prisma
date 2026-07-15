@@ -9,11 +9,52 @@ datasource db {
 
 model Laminate {
   id          String   @id @default(cuid())
+  sku         String   @unique
   name        String
   image       String
   finish      String
   color       String
+  thickness   String
+  description String
   stock       Int
   price       Float
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id])
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  visualizations Visualization[]
+}
+
+model Category {
+  id        String      @id @default(cuid())
+  name      String      @unique
+  laminates Laminate[]
+}
+
+model Visualization {
+  id              String   @id @default(cuid())
+  sourceImageUrl  String
+  outputImageUrl   String
+  laminateId      String?
+  laminate        Laminate? @relation(fields: [laminateId], references: [id])
+  opacity         Int
+  createdAt       DateTime @default(now())
+}
+
+model Inquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  message   String
+  type      String   @default("general")
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
 }
