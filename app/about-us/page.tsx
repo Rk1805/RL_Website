@@ -1,232 +1,266 @@
-import { SiteShell } from "@/components/site-shell";
+import type { Metadata } from "next";
+import Link from "next/link";
 import {
-  CheckCircle2,
-  Award,
-  Clock,
+  ChevronRight,
+  Handshake,
+  Layers,
+  MapPin,
+  ShieldCheck,
+  Sparkles,
   Users,
-  Globe,
-  Leaf,
-  Target,
-  Heart,
 } from "lucide-react";
+import { PageHero } from "@/components/page-hero";
+import { getCatalogData } from "@/lib/catalog";
+import { site } from "@/lib/site";
 
-export default function AboutUsPage() {
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "Rainbow Laminates — authorized distributor of Rosewood Laminates in Bengaluru since 2013. Our story, our values and the brands we carry.",
+};
+
+const values = [
+  {
+    icon: ShieldCheck,
+    title: "Genuine Products",
+    desc: "We supply only factory-fresh, authentic Rosewood sheets, sourced directly from the manufacturer.",
+  },
+  {
+    icon: Layers,
+    title: "Complete Range",
+    desc: "All six Rosewood brands, every catalogue and finish — available to browse in person or online.",
+  },
+  {
+    icon: Handshake,
+    title: "Honest Guidance",
+    desc: "Straightforward advice on decors, thicknesses and budgets, whether you need one sheet or a full project lot.",
+  },
+  {
+    icon: Users,
+    title: "Trade Friendly",
+    desc: "Trusted by carpenters, contractors, architects and interior designers across Bengaluru.",
+  },
+];
+
+export default async function AboutUsPage() {
+  const catalog = await getCatalogData();
+  const totalDesigns = Math.floor(catalog.products.length / 10) * 10;
+  const years = new Date().getFullYear() - site.since;
+
+  const gallery = [
+    ...catalog.products.filter((p) => p.brandSlug === "ranwood").slice(10, 12),
+    ...catalog.products.filter((p) => p.brandSlug === "ranberry").slice(2, 4),
+  ];
+
   return (
-    <SiteShell
-      intro="About Us"
-      title="Crafting Beautiful Surfaces Since 2013"
-      description="Rainbow Laminates is built around quality, dependable supply, and a modern decor palette designed for architects, dealers, and interior teams."
-    >
-      {/* Story Section */}
+    <main className="bg-stone-50 text-stone-900">
+      <PageHero
+        eyebrow="About Us"
+        title="The house of premium surfaces in Bengaluru"
+        description={`Since ${site.since}, Rainbow Laminates has been the trusted destination for Rosewood decorative laminates — bringing world-class designs to homes and workspaces across Karnataka.`}
+        crumbs={[{ label: "Home", href: "/" }, { label: "About Us" }]}
+      />
+
+      {/* Story */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>
             <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-amber-700">
               Our Story
             </div>
-            <h2 className="mt-4 text-3xl font-bold uppercase tracking-tight text-stone-900 sm:text-4xl">
-              A Legacy of Excellence
+            <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+              {years}+ years of surfaces done right
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-stone-600">
-              Since 2013, Rainbow Laminates has been at the forefront of the
-              decorative surfaces industry. We began with a vision to bring
-              premium quality laminates to architects, designers, and homeowners
-              who demand nothing but the best.
-            </p>
-            <p className="mt-4 text-lg leading-relaxed text-stone-600">
-              Today, our collection represents a modern design language because
-              we continuously refine colors, finishes, and surfaces for
-              residences, offices, and hospitality interiors across India and
-              beyond.
-            </p>
-            <div className="mt-8 flex gap-8">
-              <div>
-                <div className="text-4xl font-bold text-amber-600">10+</div>
-                <div className="mt-1 text-sm font-medium uppercase tracking-wider text-stone-500">
-                  Years Experience
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-amber-600">500+</div>
-                <div className="mt-1 text-sm font-medium uppercase tracking-wider text-stone-500">
-                  Designs
-                </div>
-              </div>
-              <div>
-                <div className="text-4xl font-bold text-amber-600">1000+</div>
-                <div className="mt-1 text-sm font-medium uppercase tracking-wider text-stone-500">
-                  Happy Clients
-                </div>
-              </div>
+            <div className="mt-6 space-y-4 leading-relaxed text-stone-600">
+              <p>
+                Rainbow Laminates began in {site.since} with a simple belief:
+                choosing a laminate should be exciting, not exhausting. From
+                our store in Kamakshipalya, Bengaluru, we set out to bring the
+                finest decorative surfaces to every carpenter&apos;s workshop
+                and every family&apos;s dream home.
+              </p>
+              <p>
+                Today, we are an authorized distributor of{" "}
+                <span className="font-semibold text-stone-900">
+                  Rosewood Laminates
+                </span>{" "}
+                — one of India&apos;s most respected laminate houses — and we
+                stock their complete portfolio: {totalDesigns}+ designs across
+                Ranwood, Ranberry, Arica, Atina, Ranwood Rega and Dazzle
+                Berry.
+              </p>
+              <p>
+                Whether you are an architect specifying a full project, a
+                contractor on a deadline, or a homeowner picking the perfect
+                wardrobe finish, our team helps you compare real samples, match
+                decors to your interiors and get the right sheet at the right
+                price.
+              </p>
             </div>
-          </div>
-          <div className="relative">
-            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-amber-100 to-stone-100 opacity-50 blur-2xl" />
-            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-stone-200 shadow-2xl">
-              <div className="flex h-full items-center justify-center bg-gradient-to-br from-stone-300 to-stone-400">
-                <div className="text-center text-stone-500">
-                  <Award className="mx-auto h-16 w-16 opacity-50" />
-                  <p className="mt-4 text-sm font-medium uppercase tracking-widest">
-                    Premium Quality Since 2013
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Values Section */}
-      <section className="bg-gradient-to-br from-stone-100 to-stone-50 py-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full bg-stone-200 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-stone-700">
-              Our Values
+            <div className="mt-8 grid grid-cols-3 gap-6 border-t border-stone-200 pt-8">
+              {[
+                [`${totalDesigns}+`, "Designs in Stock"],
+                ["6", "Rosewood Brands"],
+                [`${years}+`, "Years in Business"],
+              ].map(([value, label]) => (
+                <div key={label}>
+                  <div className="font-display text-3xl font-semibold text-amber-700">
+                    {value}
+                  </div>
+                  <div className="mt-1 text-xs uppercase tracking-widest text-stone-500">
+                    {label}
+                  </div>
+                </div>
+              ))}
             </div>
-            <h2 className="mt-4 text-3xl font-bold uppercase tracking-tight text-stone-900 sm:text-4xl">
-              What Drives Us
-            </h2>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                icon: Target,
-                title: "Research-led collections",
-                desc: "New decor lines designed to stay current.",
-              },
-              {
-                icon: Award,
-                title: "Quality first",
-                desc: "Consistent standards across every sheet and finish.",
-              },
-              {
-                icon: Clock,
-                title: "Reliable delivery",
-                desc: "Built for projects that need dependable supply.",
-              },
-              {
-                icon: Users,
-                title: "Visual support",
-                desc: "The visualizer helps clients decide faster.",
-              },
-            ].map((item) => (
+          <div className="grid grid-cols-2 gap-4">
+            {gallery.map((product, index) => (
               <div
-                key={item.title}
-                className="group rounded-2xl border border-stone-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-lg hover:shadow-stone-200/50"
+                key={product.id}
+                className={`overflow-hidden rounded-3xl shadow-lg ${
+                  index % 2 === 1 ? "translate-y-6" : ""
+                }`}
               >
-                <div className="flex items-start gap-4">
-                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
-                    <item.icon className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-sm font-bold uppercase tracking-widest text-stone-900">
-                      {item.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-stone-600">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={product.imageUrl}
+                  alt={`${product.brand} laminate ${product.code}`}
+                  className="aspect-[4/5] w-full object-cover"
+                  loading="lazy"
+                />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
+      {/* Values */}
+      <section className="bg-gradient-to-br from-stone-100 to-stone-50 py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full bg-stone-200 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-stone-700">
+              What We Stand For
+            </div>
+            <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+              The Rainbow promise
+            </h2>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {values.map((item) => (
+              <div
+                key={item.title}
+                className="group rounded-2xl border border-stone-200 bg-white p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-stone-200/50"
+              >
+                <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-100 to-amber-200 text-amber-700 shadow-sm transition-transform duration-300 group-hover:scale-110">
+                  <item.icon className="h-7 w-7" />
+                </div>
+                <h3 className="mt-4 text-sm font-bold uppercase tracking-widest text-stone-900">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Brand family */}
       <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="mb-12 text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-amber-700">
-            Why Choose Rainbow
+            <Sparkles className="h-4 w-4" />
+            The Brands We Carry
           </div>
-          <h2 className="mt-4 text-3xl font-bold uppercase tracking-tight text-stone-900 sm:text-4xl">
-            The Rainbow Advantage
+          <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+            The complete Rosewood family
           </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-stone-600">
+            Rosewood Laminates manufactures on advanced high-pressure
+            lamination lines with rigorous quality systems — and we carry every
+            one of their brands.
+          </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              icon: Globe,
-              title: "Global Standards",
-              desc: "Our products meet international quality benchmarks for durability and aesthetics.",
-            },
-            {
-              icon: Leaf,
-              title: "Eco-Friendly",
-              desc: "Sustainable manufacturing processes that minimize environmental impact.",
-            },
-            {
-              icon: Heart,
-              title: "Customer First",
-              desc: "Dedicated support team ready to assist with every project requirement.",
-            },
-            {
-              icon: Award,
-              title: "Premium Materials",
-              desc: "Only the finest raw materials are used in our laminate production.",
-            },
-            {
-              icon: Target,
-              title: "Precision Engineering",
-              desc: "State-of-the-art technology ensures consistent quality across all products.",
-            },
-            {
-              icon: Clock,
-              title: "On-Time Delivery",
-              desc: "Reliable logistics network ensuring your projects stay on schedule.",
-            },
-          ].map((item) => (
-            <div
-              key={item.title}
-              className="group rounded-2xl border border-stone-200 bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-lg hover:shadow-stone-200/50"
-            >
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-stone-100 text-stone-600 transition-colors duration-300 group-hover:bg-amber-100 group-hover:text-amber-600">
-                <item.icon className="h-6 w-6" />
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {catalog.brands.map((brand) => {
+            const sample = catalog.products.find(
+              (p) => p.brandSlug === brand.slug,
+            );
+            return (
+              <Link
+                key={brand.slug}
+                href={`/catalogues?brand=${brand.slug}`}
+                className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="aspect-[16/9] overflow-hidden bg-stone-100">
+                  {sample && (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={sample.imageUrl}
+                      alt={`${brand.name} laminate sample`}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                  )}
+                </div>
+                <div className="p-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display text-xl font-semibold text-stone-900">
+                      {brand.name}
+                    </h3>
+                    <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
+                      {brand.count} designs
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                    {brand.blurb}
+                  </p>
+                  <div className="mt-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-amber-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    View Catalogue
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Visit CTA */}
+      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-950 via-stone-900 to-stone-950 p-8 shadow-2xl sm:p-12">
+          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
+          <div className="relative grid items-center gap-8 lg:grid-cols-[1fr_auto]">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-amber-400">
+                <MapPin className="h-4 w-4" />
+                Visit Our Store
               </div>
-              <h3 className="text-lg font-bold uppercase tracking-tight text-stone-900">
-                {item.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-stone-600">
-                {item.desc}
+              <h2 className="font-display mt-4 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+                See and feel every finish in person
+              </h2>
+              <p className="mt-3 max-w-2xl leading-relaxed text-stone-300">
+                Photos only tell half the story. Drop by our Kamakshipalya
+                store to browse full-size sheets, compare textures side by side
+                and take samples home.
               </p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 p-8 shadow-2xl sm:p-12 lg:p-16">
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-amber-600/10 blur-3xl" />
-
-          <div className="relative text-center">
-            <h2 className="text-2xl font-bold uppercase tracking-tight text-white sm:text-3xl">
-              Ready to Transform Your Space?
-            </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-stone-300">
-              Explore our collection of premium decorative laminates and find
-              the perfect finish for your next project.
-            </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <a
-                href="/products"
-                className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-8 py-3 text-sm font-bold uppercase tracking-wider text-stone-900 transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
-              >
-                Browse Collection
-              </a>
-              <a
-                href="/contact-us"
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-8 py-3 text-sm font-bold uppercase tracking-wider text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-white/30"
-              >
-                Contact Us
-              </a>
-            </div>
+            <Link
+              href="/contact-us"
+              className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-7 py-3.5 text-sm font-semibold text-stone-900 transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
+            >
+              Get Directions
+              <ChevronRight className="h-4 w-4" />
+            </Link>
           </div>
         </div>
       </section>
-    </SiteShell>
+    </main>
   );
 }

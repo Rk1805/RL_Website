@@ -1,36 +1,42 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
+  variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Rainbow Laminates | Premium Decorative Surfaces",
+  title: {
+    default: "Rainbow Laminates | Premium Decorative Laminates in Bengaluru",
+    template: "%s | Rainbow Laminates",
+  },
   description:
-    "Rainbow Laminates - Premium decorative laminates for modern interiors. Since 2013, we've been crafting beautiful surfaces with refined texture, quality, and modern color stories.",
+    "Rainbow Laminates is an authorized distributor of Rosewood Laminates in Bengaluru — 450+ premium decorative laminate designs across Ranwood, Ranberry, Arica, Atina, Ranwood Rega and Dazzle Berry.",
   keywords: [
     "laminates",
-    "decorative surfaces",
-    "interior design",
-    "wood finishes",
-    "premium laminates",
+    "decorative laminates",
+    "Rosewood Laminates distributor",
+    "laminates Bangalore",
+    "sunmica",
+    "interior surfaces",
     "Rainbow Laminates",
   ],
   authors: [{ name: "Rainbow Laminates" }],
   openGraph: {
-    title: "Rainbow Laminates | Premium Decorative Surfaces",
+    title: "Rainbow Laminates | Premium Decorative Laminates in Bengaluru",
     description:
-      "Premium decorative laminates for modern interiors. Explore our collection of designer finishes.",
+      "Authorized distributor of Rosewood Laminates. Explore 450+ premium designs across six designer brands.",
     type: "website",
     locale: "en_IN",
   },
@@ -40,28 +46,23 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#1c1917",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <meta name="theme-color" content="#1c1917" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen antialiased">
+        <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
