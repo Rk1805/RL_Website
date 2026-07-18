@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
-import { navItems, brandMeta, site } from "@/lib/site";
+import {
+  navItems,
+  brandMeta,
+  branches,
+  partnerBrands,
+  site,
+} from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -34,7 +40,7 @@ export function SiteFooter() {
             <p className="mt-6 max-w-md text-sm leading-relaxed">
               Authorized distributor of Rosewood Laminates in Bengaluru. Since{" "}
               {site.since}, we have helped architects, interior designers and
-              homeowners find the perfect surface from a range of 450+ premium
+              homeowners find the perfect surface from a range of 300+ premium
               decorative laminate designs.
             </p>
             <div className="mt-6 flex flex-col gap-3 text-sm">
@@ -82,7 +88,16 @@ export function SiteFooter() {
               {brandMeta.map((brand) => (
                 <Link
                   key={brand.slug}
-                  href={`/catalogues?brand=${brand.slug}`}
+                  href={`/collections?brand=${brand.slug}`}
+                  className="text-sm transition-colors hover:text-amber-400"
+                >
+                  {brand.name}
+                </Link>
+              ))}
+              {partnerBrands.map((brand) => (
+                <Link
+                  key={brand.slug}
+                  href="/e-catalogues"
                   className="text-sm transition-colors hover:text-amber-400"
                 >
                   {brand.name}
@@ -91,18 +106,38 @@ export function SiteFooter() {
             </nav>
           </div>
 
-          {/* Contact */}
+          {/* Branches */}
           <div>
             <h4 className="text-xs font-semibold uppercase tracking-widest text-white">
-              Visit Us
+              Our Branches
             </h4>
-            <div className="mt-4 flex flex-col gap-3 text-sm">
-              <div className="flex items-start gap-2">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
-                <span className="leading-relaxed">{site.addressFull}</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Clock className="mt-0.5 h-4 w-4 shrink-0" />
+            <div className="mt-4 flex flex-col gap-4 text-sm">
+              {branches.map((branch) => (
+                <div key={branch.name}>
+                  <a
+                    href={branch.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 font-medium text-stone-300 transition-colors hover:text-amber-400"
+                  >
+                    <MapPin className="mt-0.5 h-4 w-4 shrink-0" />
+                    <span>
+                      {branch.name}
+                      <span className="block text-xs font-normal text-stone-500">
+                        {branch.city} · Est. {branch.since}
+                      </span>
+                    </span>
+                  </a>
+                  <a
+                    href={branch.phoneHref}
+                    className="ml-6 mt-1 block text-xs text-stone-500 transition-colors hover:text-amber-400"
+                  >
+                    {branch.phone}
+                  </a>
+                </div>
+              ))}
+              <div className="flex items-start gap-2 text-xs text-stone-500">
+                <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                 {site.hours}
               </div>
             </div>

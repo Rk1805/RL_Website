@@ -12,9 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Standalone utility scripts at the repo root (not part of the app).
-    "script.js",
-    "test.js",
   ]),
 ]);
 

@@ -1,40 +1,44 @@
-Rainbow Laminates Website
+# Rainbow Laminates
 
-## Getting Started
+Marketing site for **Rainbow Laminates**, Bengaluru — authorized distributor
+of Rosewood Laminates. Built with Next.js (App Router) + Tailwind CSS.
+Fully static: no database, no backend services.
 
-First, run the development server:
+## Pages
+
+- `/` — home (hero, brands, collections, features)
+- `/about-us` — story, values, brand family, branches
+- `/collections` — 314-design browser with brand/collection/thickness filters
+  (`?brand=` and `?collection=` deep links supported)
+- `/collections/[id]` — product detail with specs and 360° room viewer
+- `/e-catalogues` — downloadable PDF catalogues
+- `/contact-us` — enquiry form (WhatsApp/email), branches, map
+
+## Develop
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To open the dev server from a phone on the same network, use the machine's
+LAN IP (e.g. http://192.168.1.5:3000) — allowed origins are configured in
+next.config.ts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Content updates
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Business info** (phone, address, branches, brands): lib/site.ts
+- **Products**: data/rosewood-products.json + images in public/catalogue/
+- **PDF catalogues**: drop files in public/catalogue-pdfs/
+  (see the README there), then `npm run covers` for thumbnails
+- **Brand logos**: public/brand-logos/
 
-## Learn More
+## Deploy
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm build   # verify locally
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-Command to run backend:
-
-uvicorn main:app --reload
+Push to GitHub and import the repo at vercel.com — no environment
+variables or extra configuration needed. Every page is statically
+generated; all images/PDFs are served from public/.

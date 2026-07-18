@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | Rainbow Laminates",
   },
   description:
-    "Rainbow Laminates is an authorized distributor of Rosewood Laminates in Bengaluru — 450+ premium decorative laminate designs across Ranwood, Ranberry, Arica, Atina, Ranwood Rega and Dazzle Berry.",
+    "Rainbow Laminates is an authorized distributor of Rosewood Laminates in Bengaluru — 300+ premium decorative laminate designs across Ranwood, Ranberry, Arica, Atina, Ranwood Rega and Dazzle Berry.",
   keywords: [
     "laminates",
     "decorative laminates",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rainbow Laminates | Premium Decorative Laminates in Bengaluru",
     description:
-      "Authorized distributor of Rosewood Laminates. Explore 450+ premium designs across six designer brands.",
+      "Authorized distributor of Rosewood Laminates. Explore 300+ premium designs across six designer brands.",
     type: "website",
     locale: "en_IN",
   },

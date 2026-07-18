@@ -11,12 +11,12 @@ import {
 } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { getCatalogData } from "@/lib/catalog";
-import { site } from "@/lib/site";
+import { partnerBrands, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Rainbow Laminates — authorized distributor of Rosewood Laminates in Bengaluru since 2013. Our story, our values and the brands we carry.",
+    "Rainbow Laminates — authorized distributor of Rosewood Laminates in Bengaluru since 2009. Our story, our values and the brands we carry.",
 };
 
 const values = [
@@ -45,7 +45,7 @@ const values = [
 export default async function AboutUsPage() {
   const catalog = await getCatalogData();
   const totalDesigns = Math.floor(catalog.products.length / 10) * 10;
-  const years = new Date().getFullYear() - site.since;
+  const years = site.experienceYears;
 
   const gallery = [
     ...catalog.products.filter((p) => p.brandSlug === "ranwood").slice(10, 12),
@@ -75,9 +75,9 @@ export default async function AboutUsPage() {
               <p>
                 Rainbow Laminates began in {site.since} with a simple belief:
                 choosing a laminate should be exciting, not exhausting. From
-                our store in Kamakshipalya, Bengaluru, we set out to bring the
-                finest decorative surfaces to every carpenter&apos;s workshop
-                and every family&apos;s dream home.
+                our first store in Kamakshipalya, Bengaluru, we set out to
+                bring the finest decorative surfaces to every carpenter&apos;s
+                workshop and every family&apos;s dream home.
               </p>
               <p>
                 Today, we are an authorized distributor of{" "}
@@ -90,19 +90,21 @@ export default async function AboutUsPage() {
                 Berry.
               </p>
               <p>
-                Whether you are an architect specifying a full project, a
-                contractor on a deadline, or a homeowner picking the perfect
-                wardrobe finish, our team helps you compare real samples, match
-                decors to your interiors and get the right sheet at the right
-                price.
+                What started as a single showroom has grown into{" "}
+                <span className="font-semibold text-stone-900">
+                  three branches across Bengaluru
+                </span>{" "}
+                — Rainbow Laminates, Rainbow Marketing and Rainbow Trade Link
+                — keeping stock closer to your site and your deadlines.
               </p>
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-6 border-t border-stone-200 pt-8">
+            <div className="mt-8 grid grid-cols-2 gap-6 border-t border-stone-200 pt-8 sm:grid-cols-4">
               {[
                 [`${totalDesigns}+`, "Designs in Stock"],
                 ["6", "Rosewood Brands"],
-                [`${years}+`, "Years in Business"],
+                ["3", "Branches"],
+                [`${years}+`, "Years of Experience"],
               ].map(([value, label]) => (
                 <div key={label}>
                   <div className="font-display text-3xl font-semibold text-amber-700">
@@ -183,7 +185,7 @@ export default async function AboutUsPage() {
           <p className="mx-auto mt-3 max-w-2xl text-stone-600">
             Rosewood Laminates manufactures on advanced high-pressure
             lamination lines with rigorous quality systems — and we carry every
-            one of their brands.
+            one of their brands, alongside Koyoo, Vogue and Royalglow.
           </p>
         </div>
 
@@ -195,7 +197,7 @@ export default async function AboutUsPage() {
             return (
               <Link
                 key={brand.slug}
-                href={`/catalogues?brand=${brand.slug}`}
+                href={`/collections?brand=${brand.slug}`}
                 className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="aspect-[16/9] overflow-hidden bg-stone-100">
@@ -210,25 +212,57 @@ export default async function AboutUsPage() {
                   )}
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display text-xl font-semibold text-stone-900">
-                      {brand.name}
-                    </h3>
-                    <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
-                      {brand.count} designs
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="h-8 w-auto"
+                    loading="lazy"
+                  />
+                  <p className="mt-3 text-sm leading-relaxed text-stone-600">
                     {brand.blurb}
                   </p>
                   <div className="mt-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-amber-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    View Catalogue
+                    View Collection
                     <ChevronRight className="h-3.5 w-3.5" />
                   </div>
                 </div>
               </Link>
             );
           })}
+          {partnerBrands.map((brand) => (
+            <Link
+              key={brand.slug}
+              href="/e-catalogues"
+              className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            >
+              <div className="aspect-[16/9] overflow-hidden bg-stone-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={brand.cover}
+                  alt={`${brand.name} catalogue`}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                />
+              </div>
+              <div className="p-6">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={brand.logo}
+                  alt={brand.name}
+                  className="h-8 w-auto rounded-md"
+                  loading="lazy"
+                />
+                <p className="mt-3 text-sm leading-relaxed text-stone-600">
+                  {brand.blurb}
+                </p>
+                <div className="mt-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-amber-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  View E-Catalogues
+                  <ChevronRight className="h-3.5 w-3.5" />
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 

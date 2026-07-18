@@ -2,7 +2,7 @@ import "server-only";
 
 import { readFile } from "fs/promises";
 import path from "path";
-import { brandMeta } from "./site";
+import { brandMeta, type BrandMeta } from "./site";
 
 export type Product = {
   id: string;
@@ -19,7 +19,7 @@ export type Product = {
 
 export type CatalogData = {
   products: Product[];
-  brands: { slug: string; name: string; blurb: string; count: number }[];
+  brands: (BrandMeta & { count: number })[];
   collections: { name: string; count: number }[];
   thicknesses: { name: string; count: number }[];
 };
@@ -51,8 +51,9 @@ const brandNameToSlug: Record<string, string> = {
   "Dazzle Berry": "dazzle-berry",
 };
 
+// Images live in public/catalogue/<folder>/ and are served statically.
 function imageUrl(folder: string, fileName: string) {
-  return `/api/catalog-image?brand=${encodeURIComponent(folder)}&file=${encodeURIComponent(fileName)}`;
+  return `/catalogue/${encodeURIComponent(folder)}/${encodeURIComponent(fileName)}`;
 }
 
 function slugifyCode(code: string) {

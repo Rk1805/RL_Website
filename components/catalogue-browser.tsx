@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useMemo, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -37,17 +38,29 @@ function toggle(list: string[], value: string) {
     : [...list, value];
 }
 
-export function CatalogueBrowser({
+export function CatalogueBrowser(props: {
+  products: BrowserProduct[];
+  facets: BrowserFacets;
+}) {
+  // useSearchParams needs a Suspense boundary for the page to prerender.
+  return (
+    <Suspense>
+      <CatalogueBrowserInner {...props} />
+    </Suspense>
+  );
+}
+
+function CatalogueBrowserInner({
   products,
   facets,
-  initialBrand,
-  initialCollection,
 }: {
   products: BrowserProduct[];
   facets: BrowserFacets;
-  initialBrand?: string;
-  initialCollection?: string;
 }) {
+  const searchParams = useSearchParams();
+  const initialBrand = searchParams.get("brand") ?? undefined;
+  const initialCollection = searchParams.get("collection") ?? undefined;
+
   const [brands, setBrands] = useState<string[]>(
     initialBrand && facets.brands.some((b) => b.slug === initialBrand)
       ? [initialBrand]
@@ -284,7 +297,7 @@ export function CatalogueBrowser({
               {pageItems.map((product) => (
                 <Link
                   key={product.id}
-                  href={`/catalogues/${product.id}`}
+                  href={`/collections/${product.id}`}
                   className="group overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-stone-200/60"
                 >
                   <div className="relative aspect-[283/352] overflow-hidden bg-stone-100">

@@ -14,7 +14,7 @@ import {
   Phone,
 } from "lucide-react";
 import { getCatalogData } from "@/lib/catalog";
-import { brandMeta, site, whatsappLink } from "@/lib/site";
+import { brandMeta, partnerBrands, site, whatsappLink } from "@/lib/site";
 
 const featureTiles = [
   {
@@ -63,6 +63,21 @@ export default async function Home() {
   const catalog = await getCatalogData();
   const totalDesigns = Math.floor(catalog.products.length / 10) * 10;
 
+  const marqueeBrands = [
+    ...brandMeta.map((brand) => ({
+      slug: brand.slug,
+      name: brand.name,
+      logo: brand.logo,
+      href: `/collections?brand=${brand.slug}`,
+    })),
+    ...partnerBrands.map((brand) => ({
+      slug: brand.slug,
+      name: brand.name,
+      logo: brand.logo,
+      href: "/e-catalogues",
+    })),
+  ];
+
   const heroPicks = [
     ...catalog.products.filter((p) => p.brandSlug === "ranwood").slice(2, 4),
     ...catalog.products.filter((p) => p.brandSlug === "atina").slice(4, 6),
@@ -109,15 +124,15 @@ export default async function Home() {
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-stone-300">
                 Explore {totalDesigns}+ premium decorative laminate designs
                 across six designer brands — woodgrains, marbles, pastels and
-                bold abstracts, all under one roof in Bengaluru since{" "}
-                {site.since}.
+                bold abstracts, stocked across three branches in Bengaluru
+                since {site.since}.
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
-                  href="/catalogues"
+                  href="/collections"
                   className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-7 py-3.5 text-sm font-semibold text-stone-900 transition-all hover:bg-amber-400 hover:shadow-lg hover:shadow-amber-500/25"
                 >
-                  Explore Catalogues
+                  Explore Collections
                   <ChevronRight className="h-4 w-4" />
                 </Link>
                 <Link
@@ -130,11 +145,12 @@ export default async function Home() {
               </div>
 
               {/* Stats */}
-              <div className="mt-12 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
+              <div className="mt-12 grid grid-cols-2 gap-6 border-t border-white/10 pt-8 sm:grid-cols-4">
                 {[
                   [`${totalDesigns}+`, "Laminate Designs"],
                   ["6", "Designer Brands"],
-                  [`${new Date().getFullYear() - site.since}+`, "Years of Service"],
+                  ["3", "Branches"],
+                  [`${site.experienceYears}+`, "Years of Experience"],
                 ].map(([value, label]) => (
                   <div key={label}>
                     <div className="font-display text-3xl font-semibold text-amber-400 sm:text-4xl">
@@ -154,7 +170,7 @@ export default async function Home() {
                 {heroPicks.map((product, index) => (
                   <Link
                     key={product.id}
-                    href={`/catalogues/${product.id}`}
+                    href={`/collections/${product.id}`}
                     className={`group relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl ${
                       index % 3 === 1 ? "translate-y-8" : ""
                     }`}
@@ -184,14 +200,21 @@ export default async function Home() {
       {/* ============ BRAND MARQUEE ============ */}
       <section className="border-b border-stone-200 bg-white py-8">
         <div className="overflow-hidden">
-          <div className="animate-marquee flex w-max items-center gap-16 px-8">
-            {[...brandMeta, ...brandMeta].map((brand, index) => (
+          <div className="animate-marquee flex w-max items-center gap-20 px-10">
+            {[...marqueeBrands, ...marqueeBrands].map((brand, index) => (
               <Link
                 key={`${brand.slug}-${index}`}
-                href={`/catalogues?brand=${brand.slug}`}
-                className="font-display whitespace-nowrap text-2xl font-semibold tracking-wide text-stone-300 transition-colors hover:text-amber-600"
+                href={brand.href}
+                title={brand.name}
+                className="shrink-0"
               >
-                {brand.name}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={brand.logo}
+                  alt={brand.name}
+                  className="h-10 w-auto rounded-md transition-transform duration-300 hover:scale-110"
+                  loading="lazy"
+                />
               </Link>
             ))}
           </div>
@@ -215,7 +238,7 @@ export default async function Home() {
             </p>
           </div>
           <Link
-            href="/catalogues"
+            href="/collections"
             className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-amber-700 transition-colors hover:text-amber-600"
           >
             View All
@@ -227,7 +250,7 @@ export default async function Home() {
           {collectionCards.map((collection) => (
             <Link
               key={collection.name}
-              href={`/catalogues?collection=${encodeURIComponent(collection.name)}`}
+              href={`/collections?collection=${encodeURIComponent(collection.name)}`}
               className="group relative overflow-hidden rounded-3xl shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <div className="aspect-[4/5] w-full overflow-hidden bg-stone-200">
@@ -260,18 +283,18 @@ export default async function Home() {
       </section>
 
       {/* ============ BRANDS ============ */}
-      <section className="bg-stone-950 py-20">
+      <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
-            <div className="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-amber-400">
-              The Rosewood Family
+            <div className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-amber-700">
+              Our Brands
             </div>
-            <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Six brands, one standard of excellence
+            <h2 className="font-display mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+              Nine brands, one standard of excellence
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-stone-400">
-              As an authorized distributor, we stock the complete Rosewood
-              Laminates portfolio — every brand, every finish, every design.
+            <p className="mx-auto mt-3 max-w-2xl text-stone-600">
+              The complete Rosewood Laminates family — plus Koyoo, Vogue and
+              Royalglow — every brand, every finish, every design.
             </p>
           </div>
 
@@ -283,36 +306,64 @@ export default async function Home() {
               return (
                 <Link
                   key={brand.slug}
-                  href={`/catalogues?brand=${brand.slug}`}
-                  className="group relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 transition-all duration-300 hover:-translate-y-1 hover:border-amber-500/30"
+                  href={`/collections?brand=${brand.slug}`}
+                  className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-stone-200/60"
                 >
-                  <div className="flex items-center gap-5 p-6">
-                    <div className="h-20 w-20 shrink-0 overflow-hidden rounded-2xl bg-stone-800">
-                      {sample && (
-                        /* eslint-disable-next-line @next/next/no-img-element */
-                        <img
-                          src={sample.imageUrl}
-                          alt={brand.name}
-                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-display text-xl font-semibold text-white">
-                        {brand.name}
-                      </h3>
-                      <p className="mt-1 text-sm leading-relaxed text-stone-400">
-                        {brand.blurb}
-                      </p>
-                      <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-amber-400">
-                        {brand.count} designs
-                      </p>
-                    </div>
+                  <div className="aspect-[16/9] overflow-hidden bg-stone-100">
+                    {sample && (
+                      /* eslint-disable-next-line @next/next/no-img-element */
+                      <img
+                        src={sample.imageUrl}
+                        alt={`${brand.name} laminate sample`}
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                  <div className="p-5">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={brand.logo}
+                      alt={brand.name}
+                      className="h-7 w-auto"
+                      loading="lazy"
+                    />
+                    <p className="mt-3 text-sm leading-relaxed text-stone-600">
+                      {brand.blurb}
+                    </p>
                   </div>
                 </Link>
               );
             })}
+            {partnerBrands.map((brand) => (
+              <Link
+                key={brand.slug}
+                href="/e-catalogues"
+                className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-stone-200/60"
+              >
+                <div className="aspect-[16/9] overflow-hidden bg-stone-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={brand.cover}
+                    alt={`${brand.name} catalogue`}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="h-7 w-auto rounded-md"
+                    loading="lazy"
+                  />
+                  <p className="mt-3 text-sm leading-relaxed text-stone-600">
+                    {brand.blurb}
+                  </p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -367,7 +418,7 @@ export default async function Home() {
               </h2>
             </div>
             <Link
-              href="/catalogues"
+              href="/collections"
               className="inline-flex items-center gap-2 rounded-full bg-stone-900 px-6 py-3 text-sm font-medium text-white transition-all hover:bg-amber-700"
             >
               Browse All Designs
@@ -379,7 +430,7 @@ export default async function Home() {
             {featured.map((product) => (
               <Link
                 key={product.id}
-                href={`/catalogues/${product.id}`}
+                href={`/collections/${product.id}`}
                 className="group overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="aspect-[3/4] overflow-hidden bg-stone-100">
@@ -433,8 +484,8 @@ export default async function Home() {
                 },
                 {
                   icon: Truck,
-                  title: "Fast local delivery",
-                  desc: "Quick dispatch across Bengaluru so your project never waits on material.",
+                  title: "Three branches, fast delivery",
+                  desc: "Godowns across Bengaluru mean quick dispatch, so your project never waits on material.",
                 },
               ].map((item) => (
                 <div key={item.title} className="flex gap-4">
